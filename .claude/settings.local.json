@@ -20,7 +20,12 @@
       "Bash(pkill -f \"uvicorn\")",
       "Bash(taskkill //F //IM python.exe)",
       "Bash(rm -f \"F:/CC_projects/travel_plan/backend/data/travel.db\")",
-      "Bash(rm -f F:/CC_projects/travel_plan/backend/data/travel.db)"
+      "Bash(rm -f F:/CC_projects/travel_plan/backend/data/travel.db)",
+      "Bash(git remote *)",
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "Bash(git add *)",
+      "Bash(git rebase *)"
     ]
   }
 }
