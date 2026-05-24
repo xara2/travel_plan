@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install *)",
+      "Bash(timeout 5 python run.py)",
+      "Bash(npx create-vite@latest frontend --template react)",
+      "Bash(npm install *)",
+      "Bash(npx vite *)",
+      "Bash(python run.py)",
+      "Bash(curl -s http://localhost:8000/)",
+      "Bash(curl *)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'{len\\(d\\)} attractions found'\\); [print\\(f'  - {a[\\\\\"name\\\\\"]} \\({a[\\\\\"rating\\\\\"]}\\)'\\) for a in d]\")",
+      "Bash(python -c ')",
+      "Bash(pkill -f \"python run.py\")",
+      "Bash(rm -f /tmp/plan_req.json)",
+      "Bash(npm run *)",
+      "Bash(python -c \"import json; d=json.load\\(open\\('F:/CC_projects/travel_plan/backend/data/cities.json','r',encoding='utf-8'\\)\\); print\\(f'{len\\(d\\)} provinces, {sum\\(len\\(p[\\\\\"cities\\\\\"]\\) for p in d\\)} total cities'\\)\")",
+      "Bash(python *)",
+      "Bash(xxd)",
+      "Bash(pkill -f \"uvicorn\")",
+      "Bash(taskkill //F //IM python.exe)",
+      "Bash(rm -f \"F:/CC_projects/travel_plan/backend/data/travel.db\")",
+      "Bash(rm -f F:/CC_projects/travel_plan/backend/data/travel.db)"
+    ]
+  }
+}
