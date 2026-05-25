@@ -51,10 +51,22 @@ def _load_attractions():
 def seed_attractions():
     db = SessionLocal()
     try:
-        if db.query(Attraction).count() > 0:
-            return
-        for attr in _load_attractions():
-            db.add(Attraction(**attr))
+        existing = db.query(Attraction).count()
+        if existing == 0:
+            for attr in _load_attractions():
+                db.add(Attraction(**attr))
+        else:
+            # Update image URLs and other fields from JSON for existing attractions
+            data = _load_attractions()
+            for attr_data in data:
+                existing_attr = db.query(Attraction).filter_by(
+                    name=attr_data["name"], city=attr_data["city"]
+                ).first()
+                if existing_attr:
+                    existing_attr.image_url = attr_data.get("image_url", existing_attr.image_url)
+                    existing_attr.ticket_price = attr_data.get("ticket_price", 0)
+                    existing_attr.need_reservation = attr_data.get("need_reservation", False)
+                    existing_attr.opening_hours = attr_data.get("opening_hours", "08:00-17:00")
         db.commit()
     finally:
         db.close()
