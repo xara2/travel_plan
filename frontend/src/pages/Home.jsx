@@ -17,6 +17,8 @@ const { RangePicker } = DatePicker
 export default function Home() {
   const navigate = useNavigate()
   const [provincesData, setProvincesData] = useState([])
+  const [citiesLoading, setCitiesLoading] = useState(true)
+  const [citiesError, setCitiesError] = useState(false)
   const [selectedCity, setSelectedCity] = useState('')
   const [selectedProvince, setSelectedProvince] = useState('')
   const [keyword, setKeyword] = useState('')
@@ -29,20 +31,28 @@ export default function Home() {
   const [detailAttr, setDetailAttr] = useState(null)
   const [departTime, setDepartTime] = useState(dayjs('09:00', 'HH:mm'))
 
-  useEffect(() => {
+  const fetchCities = () => {
+    setCitiesLoading(true)
+    setCitiesError(false)
     getCities().then((res) => {
       const data = res.data
       if (Array.isArray(data) && data.length > 0) {
-        // Province/city hierarchy
         if (data[0].province) {
           setProvincesData(data)
         } else {
-          // Flat list fallback - wrap as single province
           setProvincesData([{ province: '全部', type: '', cities: data }])
         }
       }
-    }).catch(() => {})
-  }, [])
+      setCitiesError(false)
+    }).catch(() => {
+      setCitiesError(true)
+      message.error('加载目的地失败，请检查网络后重试')
+    }).finally(() => {
+      setCitiesLoading(false)
+    })
+  }
+
+  useEffect(() => { fetchCities() }, [])
 
   // Build Cascader options: province → city
   // 直辖市可直接选择省份, 无需再选城市
@@ -172,7 +182,8 @@ export default function Home() {
           <Cascader
             showSearch
             allowClear
-            placeholder="选择目的地"
+            placeholder={citiesLoading ? "加载目的地中..." : citiesError ? "加载失败，点击刷新" : "选择目的地"}
+            disabled={citiesError}
             onChange={(v) => {
               if (!v || v.length === 0) {
                 setSelectedProvince('')
@@ -191,8 +202,13 @@ export default function Home() {
             style={{ width: 220 }}
             size="large"
             options={cascaderOptions}
-            suffixIcon={<EnvironmentOutlined />}
+            suffixIcon={citiesLoading ? <Spin size="small" /> : <EnvironmentOutlined />}
           />
+          {citiesError && (
+            <Button size="large" onClick={fetchCities} icon={<EnvironmentOutlined />}>
+              重新加载
+            </Button>
+          )}
           <Input
             placeholder="搜索景点名称、类型..."
             value={keyword}
