@@ -127,11 +127,20 @@ class ReActAgent:
             iteration += 1
 
             # Get LLM response
-            response = await self.llm.chat(
-                messages=messages,
-                temperature=0.7,
-                max_tokens=2000,
-            )
+            try:
+                response = await self.llm.chat(
+                    messages=messages,
+                    temperature=0.7,
+                    max_tokens=2000,
+                )
+            except Exception as e:
+                error_msg = str(e)
+                if "InvalidApiKey" in error_msg or "No API-key" in error_msg:
+                    return "抱歉，AI 服务尚未配置。请在后台设置 LLM_API_KEY 环境变量。"
+                elif "timeout" in error_msg.lower():
+                    return "AI 服务响应超时，请稍后再试。"
+                else:
+                    return f"抱歉，AI 服务暂时不可用：{error_msg[:100]}"
 
             # Try to parse tool call from response
             tool_call = self._parse_tool_call(response)
