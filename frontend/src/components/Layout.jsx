@@ -6,6 +6,7 @@ import {
   UserOutlined,
   LogoutOutlined,
   GlobalOutlined,
+  MessageOutlined,
 } from '@ant-design/icons'
 
 export default function Layout({ children }) {
@@ -25,6 +26,7 @@ export default function Layout({ children }) {
   const navItems = [
     { key: '/', label: '创建计划', icon: <HomeOutlined /> },
     { key: '/my-plans', label: '我的计划', icon: <FileTextOutlined /> },
+    { key: '/chat', label: 'AI助手', icon: <MessageOutlined /> },
   ]
 
   return (

@@ -49,3 +49,18 @@ export const listPlans = () => api.get('/plans')
 export const getPlan = (id) => api.get(`/plans/${id}`)
 export const deletePlan = (id) => api.delete(`/plans/${id}`)
 export const getRouteOptions = (params) => api.get('/plans/route/options', { params })
+
+// Chat / Conversations
+export const sendChat = (data) => api.post('/chat', data)
+export const streamChat = (data) => api.post('/chat/stream', data)
+export const listConversations = () => api.get('/conversations')
+export const getConversation = (id) => api.get(`/conversations/${id}`)
+export const deleteConversation = (id) => api.delete(`/conversations/${id}`)
+export const updateConversation = (id, data) => api.patch(`/conversations/${id}`, data)
+
+// Images
+export const searchImages = (data) => api.post('/images/search', data)
+
+// Agent
+export const runAgentPlan = (destination, duration, preferences) =>
+  api.post('/agent/plan', null, { params: { destination, duration, preferences } })

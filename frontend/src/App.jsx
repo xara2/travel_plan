@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import PlanDetail from './pages/PlanDetail'
 import MyPlans from './pages/MyPlans'
+import AIChat from './pages/AIChat'
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem('token')
@@ -36,6 +37,22 @@ export default function App() {
           element={
             <PrivateRoute>
               <MyPlans />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <PrivateRoute>
+              <AIChat />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/chat/:id"
+          element={
+            <PrivateRoute>
+              <AIChat />
             </PrivateRoute>
           }
         />
